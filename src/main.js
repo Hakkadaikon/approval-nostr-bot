@@ -10,12 +10,8 @@ const BOT_PRIVATE_KEY_HEX =
  */
 const callback = (ev) => {
     logger.debug("[" + ev.created_at + "] content: " + ev.content);
-    if (
-        ev.content.includes("ほめて") ||
-        ev.content.includes("褒めて") ||
-        ev.content.includes("ほめろ") ||
-        ev.content.includes("褒めろ")
-    ) {
+    if (ev.content.match(/(ほめ|褒め|たたえ|称え)(て|ろ)/g)) {
+        logger.debug("Hit!");
         const reaction = event.create("reaction", "+", ev);
         relay.publish(reaction);
         const post = event.create("reply", "えらい！", ev);
